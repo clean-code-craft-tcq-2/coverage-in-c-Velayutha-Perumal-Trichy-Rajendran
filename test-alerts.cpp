@@ -17,9 +17,9 @@ TEST_CASE("Check If upperlimits set properly") {
 }
 
 TEST_CASE("Check If lowerlimits set properly") {
-	REQUIRE(getBreachUpperLimit(PASSIVE_COOLING) == 0.0);
-	REQUIRE(getBreachUpperLimit(HI_ACTIVE_COOLING) == 0.0);
-	REQUIRE(getBreachUpperLimit(MED_ACTIVE_COOLING) == 0.0);
+	REQUIRE(getBreachLowerLimit(PASSIVE_COOLING) == 0.0);
+	REQUIRE(getBreachLowerLimit(HI_ACTIVE_COOLING) == 0.0);
+	REQUIRE(getBreachLowerLimit(MED_ACTIVE_COOLING) == 0.0);
 }
 
 TEST_CASE("infers the breach according to Cooling type") {

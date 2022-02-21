@@ -16,8 +16,8 @@ typedef enum {
 } CoolingType;
 
 typedef struct __limit__{
-  double upperLimit;
   double lowerLimit;
+  double upperLimit;
 }BreachLimits;
 													
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
