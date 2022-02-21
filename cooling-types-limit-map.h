@@ -14,7 +14,7 @@ typedef struct __limit__{
   double lowerLimit;
 }BreachLimits;
 
-BreachLimits breachLimits[TOTAL_SUPPORTED_COOLING_TYPE] = {
+BreachLimits breachThreshold[TOTAL_SUPPORTED_COOLING_TYPE] = {
 																{0.0, 35.0},
 																{0.0, 45.0},
 																{0.0, 40.0}

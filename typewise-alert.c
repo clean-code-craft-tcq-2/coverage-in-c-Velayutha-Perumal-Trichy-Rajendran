@@ -21,12 +21,12 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit)
 
 Limit getBreachUpperLimit (CoolingType coolingType)
 {
-	return breachLimits[coolingType].upperLimit;
+	return breachThreshold[coolingType].upperLimit;
 }
 
 Limit getBreachLowerLimit (CoolingType coolingType)
 {
-	return breachLimits[coolingType].lowerLimit;
+	return breachThreshold[coolingType].lowerLimit;
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
