@@ -38,8 +38,8 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
 {
 	BreachLimits limits;
 	
-	limits.lowerLimit = getBreachUpperLimit (coolingType);
-	limits.upperLimit = getBreachLowerLimit (coolingType);
+	limits.upperLimit = getBreachUpperLimit (coolingType);
+	limits.lowerLimit = getBreachLowerLimit (coolingType);
 	
 	return inferBreach(temperatureInC, limits.lowerLimit, limits.upperLimit);	
 }
