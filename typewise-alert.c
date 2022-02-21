@@ -1,17 +1,23 @@
 #include "typewise-alert.h"
+#include "cooling-types-limit-map.h"
 #include <stdio.h>
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
-  if(value < lowerLimit) {
-    return TOO_LOW;
-  }
-  if(value > upperLimit) {
-    return TOO_HIGH;
-  }
-  return NORMAL;
+BreachType inferBreach(double value, double lowerLimit, double upperLimit) 
+{
+	BreachType breachType = NORMAL;
+
+	if(value < lowerLimit) 
+	{
+		breachType = TOO_LOW;
+	}
+	if(value > upperLimit) 
+	{
+		breachType = TOO_HIGH;
+	}
+	  return breachType;
 }
 
-BreachType classifyTemperatureBreach(
+/* BreachType classifyTemperatureBreach(
     CoolingType coolingType, double temperatureInC) {
   int lowerLimit = 0;
   int upperLimit = 0;
@@ -30,8 +36,42 @@ BreachType classifyTemperatureBreach(
       break;
   }
   return inferBreach(temperatureInC, lowerLimit, upperLimit);
+} */
+
+Limit getBreachUpperLimit (CoolingType coolingType)
+{
+	return breachLimits[coolingType].upperLimit;
 }
 
+Limit getBreachLowerLimit (CoolingType coolingType)
+{
+	return breachLimits[coolingType].lowerLimit;
+}
+
+BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
+{
+	BreachLimits limits;
+	
+	limits.lowerLimit = getBreachUpperLimit (coolingType);
+	limits.upperLimit = getBreachLowerLimit (coolingType);
+	
+	return inferBreach(temperatureInC, limits.lowerLimit, limits.upperLimit);	
+}
+ 
+Status sendAlertIfBreach (AlertTarget alertTarget, BreachType breachType)
+{
+	Status alertStatus = NOT_SENT;
+	alertTarget sendAlert = alertsTo[alertTarget];
+	
+	if (breachType)
+	{
+		alertStatus = sendAlert(breachType);
+	}
+	
+	return alertStatus;
+}
+
+/* checkBreachStatus
 void checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
@@ -48,24 +88,4 @@ void checkAndAlert(
       break;
   }
 }
-
-void sendToController(BreachType breachType) {
-  const unsigned short header = 0xfeed;
-  printf("%x : %x\n", header, breachType);
-}
-
-void sendToEmail(BreachType breachType) {
-  const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
-  }
-}
+ */
