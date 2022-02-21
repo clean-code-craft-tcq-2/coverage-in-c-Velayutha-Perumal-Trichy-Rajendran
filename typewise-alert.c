@@ -31,7 +31,7 @@ Limit getBreachLowerLimit (CoolingType coolingType)
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
 {
-	BreachLimits limits;
+	struct BreachLimits limits;
 	
 	limits.lowerLimit = getBreachUpperLimit (coolingType);
 	limits.upperLimit = getBreachLowerLimit (coolingType);

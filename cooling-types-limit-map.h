@@ -9,16 +9,14 @@ typedef enum {
   TOTAL_SUPPORTED_COOLING_TYPE
 } CoolingType;
 
-typedef struct __limit__{
+struct BreachLimits {
   double upperLimit;
   double lowerLimit;
-}BreachLimits;
-
-BreachLimits breachThreshold[TOTAL_SUPPORTED_COOLING_TYPE] = {
-																{0.0, 35.0},
-																{0.0, 45.0},
-																{0.0, 40.0}
-															};
+}breachThreshold[TOTAL_SUPPORTED_COOLING_TYPE] ={
+													{0.0, 35.0},
+													{0.0, 45.0},
+													{0.0, 40.0}
+												};
 															
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 Limit getBreachUpperLimit (CoolingType coolingType);
