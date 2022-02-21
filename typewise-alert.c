@@ -3,6 +3,11 @@
 #include <stdio.h>
 
 sendAlert alertsTo[TOTAL_ALERT_TARGET] = {sendToController, sendToEmail};
+BreachLimits breachLimits[TOTAL_SUPPORTED_COOLING_TYPE] = 	{
+																{PASSIVE_COOLING_LO_LIMIT, PASSIVE_COOLING_UP_LIMIT},
+																{HI_ACTIVE_COOLING_LO_LIMIT, HI_ACTIVE_COOLING_UP_LIMIT},
+																{MED_ACTIVE_COOLING_LO_LIMIT, MED_ACTIVE_COOLING_UP_LIMIT}
+															};
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) 
 {
@@ -21,17 +26,17 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit)
 
 Limit getBreachUpperLimit (CoolingType coolingType)
 {
-	return breachThreshold[coolingType].upperLimit;
+	return breachLimits[coolingType].upperLimit;
 }
 
 Limit getBreachLowerLimit (CoolingType coolingType)
 {
-	return breachThreshold[coolingType].lowerLimit;
+	return breachLimits[coolingType].lowerLimit;
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
 {
-	struct BreachLimits limits;
+	BreachLimits limits;
 	
 	limits.lowerLimit = getBreachUpperLimit (coolingType);
 	limits.upperLimit = getBreachLowerLimit (coolingType);

@@ -1,6 +1,12 @@
 #pragma once
 
 typedef float Limit;
+#define PASSIVE_COOLING_UP_LIMIT		35.0
+#define PASSIVE_COOLING_LO_LIMIT		0.0
+#define HI_ACTIVE_COOLING_UP_LIMIT		45.0
+#define HI_ACTIVE_COOLING_LO_LIMIT		0.0
+#define MED_ACTIVE_COOLING_UP_LIMIT		40.0
+#define MED_ACTIVE_COOLING_LO_LIMIT		0.0
 
 typedef enum {
   PASSIVE_COOLING,
@@ -9,15 +15,11 @@ typedef enum {
   TOTAL_SUPPORTED_COOLING_TYPE
 } CoolingType;
 
-struct BreachLimits {
+typedef struct __limit__{
   double upperLimit;
   double lowerLimit;
-}breachThreshold[TOTAL_SUPPORTED_COOLING_TYPE] ={
-													{0.0, 35.0},
-													{0.0, 45.0},
-													{0.0, 40.0}
-												};
-															
+}BreachLimits;
+													
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 Limit getBreachUpperLimit (CoolingType coolingType);
 Limit getBreachLowerLimit (CoolingType coolingType);
