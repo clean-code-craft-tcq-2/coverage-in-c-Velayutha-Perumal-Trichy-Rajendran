@@ -2,6 +2,8 @@
 #include "cooling-types-limit-map.h"
 #include <stdio.h>
 
+sendAlert alertsTo[TOTAL_ALERT_TARGET] = {sendToController, sendToEmail};
+
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) 
 {
 	BreachType breachType = NORMAL;
@@ -16,27 +18,6 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit)
 	}
 	  return breachType;
 }
-
-/* BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
-  int lowerLimit = 0;
-  int upperLimit = 0;
-  switch(coolingType) {
-    case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
-      break;
-  }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
-} */
 
 Limit getBreachUpperLimit (CoolingType coolingType)
 {
@@ -58,34 +39,15 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
 	return inferBreach(temperatureInC, limits.lowerLimit, limits.upperLimit);	
 }
  
-Status sendAlertIfBreach (AlertTarget alertTarget, BreachType breachType)
+Status sendAlertIfBreach (AlertTarget targetAlert, BreachType breachType)
 {
 	Status alertStatus = NOT_SENT;
-	alertTarget sendAlert = alertsTo[alertTarget];
+	sendAlert alert_callback = alertsTo[targetAlert];
 	
 	if (breachType)
 	{
-		alertStatus = sendAlert(breachType);
+		alertStatus = alert_callback(breachType);
 	}
 	
 	return alertStatus;
 }
-
-/* checkBreachStatus
-void checkAndAlert(
-    AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
-
-  BreachType breachType = classifyTemperatureBreach(
-    batteryChar.coolingType, temperatureInC
-  );
-
-  switch(alertTarget) {
-    case TO_CONTROLLER:
-      sendToController(breachType);
-      break;
-    case TO_EMAIL:
-      sendToEmail(breachType);
-      break;
-  }
-}
- */

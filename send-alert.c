@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "typewise-alert.h"
 
-extern char *alertMessages[TOTAL_ALERTS];
+char const *alertMessages[TOTAL_ALERTS] = {"NORMAL", "TOO_LOW", "TOO_HIGH"};
 
 Status sendToController(BreachType breachType) {
   const unsigned short header = 0xfeed;
@@ -16,17 +16,5 @@ Status sendToEmail(BreachType breachType) {
   printf("To: %s\n", recepient);
   printf("Hi, the temperature is %s\n", alertMessages[breachType]);
   
-  /* switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is %s\n", alertMessages[breachType]);
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
-  } */
   return SENT;
 }
